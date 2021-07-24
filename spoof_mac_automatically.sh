@@ -22,12 +22,11 @@ plugin_enabled=1
 
 ###### CUSTOM FUNCTIONS ######
 function spoof_mac_automatically() {
-    option_counter2=0
-    for item2 in ${ifaces}; do
-        option_counter2=$((option_counter2 + 1))
-        if [[ "${iface}" = "${option_counter2}" ]]; then
-            interface=${item2}
-            interface_mac=$(set_spoofed_mac "${interface}")
+    option_counter=0
+    for interfaceName in ${ifaces}; do
+        option_counter=$((option_counter + 1))
+        if [[ "${iface}" = "${option_counter}" ]]; then
+            interface_mac=$(set_spoofed_mac "${interfaceName}")
             break
         fi
     done   
