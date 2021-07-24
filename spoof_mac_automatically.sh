@@ -40,31 +40,45 @@ plugin_maximum_ag_affected_version=""
 
 plugin_distros_supported=("*")
 
-# Spoof MAC-address after each interface selection action:
+# Spoof MAC-address after each interface selection action.
 function spoof_mac_automatically_posthook_select_interface() {
     debug_print
     spoof_mac_automatically
 }
 
-# Spoof MAC-address before WPS-attack:
+# Spoof MAC-address after each interface selection action.
+# Used for losing MAC-address, which compromised by attack with previously selected interface.
+function spoof_mac_automatically_prehook_select_interface() {
+    debug_print
+    spoof_mac_automatically
+}
+
+# Spoof MAC-address at application exit
+# Used for losing MAC-address, which compromised by attack with last selected interface.
+function spoof_mac_automatically_prehook_exit_script_option() {
+    debug_print
+    spoof_mac_automatically
+}
+
+# Spoof MAC-address before WPS-attack.
 function spoof_mac_automatically_prehook_set_wps_attack_script() {
     debug_print
     spoof_mac_automatically
 }
 
-# Spoof MAC-address before WEP-attack:
+# Spoof MAC-address before WEP-attack.
 function spoof_mac_automatically_prehook_set_wep_script() {
     debug_print
     spoof_mac_automatically
 }
 
-# Spoof MAC-address before DoS pursuit mode attacks:
+# Spoof MAC-address before DoS pursuit mode attacks.
 function spoof_mac_automatically_prehook_et_prerequisites() {
     debug_print
     spoof_mac_automatically
 }
 
-# Spoof MAC-address before amok-, aireplay-, wids- and flood- attacks:
+# Spoof MAC-address before amok-, aireplay-, wids-, flood- and some other attacks:
 function spoof_mac_automatically_prehook_exec_mdkdeauth() {
     debug_print
     spoof_mac_automatically
@@ -86,12 +100,6 @@ function spoof_mac_automatically_prehook_exec_authdos() {
     spoof_mac_automatically
 }
 function spoof_mac_automatically_prehook_exec_michaelshutdown() {
-    debug_print
-    spoof_mac_automatically
-}
-
-# Spoof MAC-address at application exit (for losing MAC-address, which compromised by attack):
-function spoof_mac_automatically_prehook_exit_script_option() {
     debug_print
     spoof_mac_automatically
 }
