@@ -1,5 +1,12 @@
 #!/usr/bin/env bash
 
+# Regdomain airgeddon plugin
+
+# Version:    0.1
+# Author:     Bogdan107
+# Repository: https://github.com/Bogdan107/airgeddon-plugins
+# License:    GNU General Public License v3.0, https://opensource.org/licenses/GPL-3.0
+
 #Global shellcheck disabled warnings
 #shellcheck disable=SC2034,SC2154
 
