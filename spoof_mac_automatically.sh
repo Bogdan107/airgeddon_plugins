@@ -82,3 +82,9 @@ function spoof_mac_automatically_prehook_exec_michaelshutdown() {
     debug_print
     spoof_mac_automatically
 }
+
+# Spoof MAC-address at application exit (for losing MAC-address, which compromised by attack):
+function spoof_mac_automatically_prehook_exit_script_option() {
+    debug_print
+    spoof_mac_automatically
+}
