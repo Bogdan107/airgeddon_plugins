@@ -10,8 +10,6 @@
 #Global shellcheck disabled warnings
 #shellcheck disable=SC2034,SC2154
 
-#Start modifying below this line. You can safely remove comments but be pretty sure to know what you are doing!
-
 ###### GENERIC PLUGIN VARS ######
 
 plugin_name="Auto-spoof MAC address"
@@ -21,6 +19,7 @@ plugin_author="Bogdan107"
 plugin_enabled=1
 
 ###### CUSTOM FUNCTIONS ######
+
 function spoof_mac_automatically() {
     option_counter=0
     for interfaceName in ${ifaces}; do
