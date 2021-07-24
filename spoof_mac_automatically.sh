@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# Regdomain airgeddon plugin
+# spoof_mac_automatically airgeddon plugin
 
 # Version:    0.1
 # Author:     Bogdan107
