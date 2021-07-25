@@ -48,7 +48,7 @@ plugin_maximum_ag_affected_version=""
 
 plugin_distros_supported=("*")
 
-# Spoof MAC-address after each interface selection action.
+# Fix spoofed_mac restoring:
 function spoof_mac_automatically_posthook_restore_spoofed_macs() {
     debug_print
     spoofed_mac=0
