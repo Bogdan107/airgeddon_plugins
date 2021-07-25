@@ -2,7 +2,7 @@
 
 # spoof_mac_automatically airgeddon plugin
 
-# Version:    0.1
+# Version:    0.2
 # Author:     Bogdan107
 # Repository: https://github.com/Bogdan107/airgeddon-plugins
 # License:    GNU General Public License v3.0, https://opensource.org/licenses/GPL-3.0
@@ -20,16 +20,25 @@ plugin_enabled=1
 plugin_AIRGEDDON_DO_NOT_SPOOF_MAC_ADDRESS_AUTOMATIC=0
 
 ###### CUSTOM FUNCTIONS ######
+function convert_iface_to_ifname() {
+    local ifaceNumber="$1";
 
-function spoof_mac_automatically() {
     option_counter=0
     for interfaceName in ${ifaces}; do
         option_counter=$((option_counter + 1))
         if [[ "${iface}" = "${option_counter}" ]]; then
-            interface_mac=$(set_spoofed_mac "${interfaceName}")
+            echo "${interfaceName}"
             break
         fi
     done
+}
+function spoof_mac_automatically() {
+    # Restore original macs:
+    restore_spoofed_macs
+
+    # Set new random mac:
+    local interfaceName=$(convert_iface_to_ifname ${iface})
+    set_spoofed_mac "${interfaceName}"
 }
 
 ###### PLUGIN REQUIREMENTS ######
@@ -43,32 +52,47 @@ plugin_distros_supported=("*")
 function spoof_mac_automatically_posthook_select_interface() {
     debug_print
     spoof_mac_automatically
+    interface_mac="${new_random_mac}"
 }
 
-# Spoof MAC-address after each interface selection action.
-# Used for losing MAC-address, which compromised by attack with previously selected interface.
-function spoof_mac_automatically_prehook_select_interface() {
-    debug_print
-    spoof_mac_automatically
-}
-
-# Spoof MAC-address at application exit
-# Used for losing MAC-address, which compromised by attack with last selected interface.
-function spoof_mac_automatically_prehook_exit_script_option() {
-    debug_print
-    spoof_mac_automatically
-}
-
-# Spoof MAC-address before WPS-attack.
+# Spoof MAC-address for WPS-attack.
 function spoof_mac_automatically_prehook_set_wps_attack_script() {
     debug_print
     spoof_mac_automatically
 }
+function spoof_mac_automatically_posthook_exec_reaver_pixiewps_attack() {
+    debug_print
+    restore_spoofed_macs
+}
+function spoof_mac_automatically_posthook_exec_wps_bruteforce_pin_bully_attack() {
+    debug_print
+    restore_spoofed_macs
+}
+function spoof_mac_automatically_posthook_exec_wps_bruteforce_pin_reaver_attack() {
+    debug_print
+    restore_spoofed_macs
+}
+function spoof_mac_automatically_posthook_exec_wps_pin_database_bully_attack() {
+    debug_print
+    restore_spoofed_macs
+}
+function spoof_mac_automatically_posthook_exec_wps_pin_database_reaver_attack() {
+    debug_print
+    restore_spoofed_macs
+}
+function spoof_mac_automatically_posthook_exec_reaver_nullpin_attack() {
+    debug_print
+    restore_spoofed_macs
+}
 
-# Spoof MAC-address before WEP-attack.
-function spoof_mac_automatically_prehook_set_wep_script() {
+# Spoof MAC-address for WEP-attack.
+function spoof_mac_automatically_prehook_exec_wep_allinone_attack() {
     debug_print
     spoof_mac_automatically
+}
+function spoof_mac_automatically_posthook_exec_wep_allinone_attack() {
+    debug_print
+    restore_spoofed_macs
 }
 
 # Spoof MAC-address before amok-, aireplay-, wids-, flood- and some other attacks:
@@ -95,6 +119,31 @@ function spoof_mac_automatically_prehook_exec_authdos() {
 function spoof_mac_automatically_prehook_exec_michaelshutdown() {
     debug_print
     spoof_mac_automatically
+}
+# Restore MAC-address after amok-, aireplay-, wids-, flood- and some other attacks:
+function spoof_mac_automatically_posthook_exec_mdkdeauth() {
+    debug_print
+    restore_spoofed_macs
+}
+function spoof_mac_automatically_posthook_exec_aireplaydeauth() {
+    debug_print
+    restore_spoofed_macs
+}
+function spoof_mac_automatically_posthook_exec_wdsconfusion() {
+    debug_print
+    restore_spoofed_macs
+}
+function spoof_mac_automatically_posthook_exec_beaconflood() {
+    debug_print
+    restore_spoofed_macs
+}
+function spoof_mac_automatically_posthook_exec_authdos() {
+    debug_print
+    restore_spoofed_macs
+}
+function spoof_mac_automatically_posthook_exec_michaelshutdown() {
+    debug_print
+    restore_spoofed_macs
 }
 
 # Spoof MAC-address before DoS pursuit mode attacks.
