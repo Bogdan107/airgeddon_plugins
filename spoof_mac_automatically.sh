@@ -2,7 +2,7 @@
 
 # spoof_mac_automatically airgeddon plugin
 
-# Version:    0.2.1
+# Version:    0.2.2
 # Author:     Bogdan107
 # Repository: https://github.com/Bogdan107/airgeddon-plugins
 # License:    GNU General Public License v3.0, https://opensource.org/licenses/GPL-3.0
@@ -17,7 +17,6 @@ plugin_description="Automatically spoof MAC-address in front of critical moments
 plugin_author="Bogdan107"
 
 plugin_enabled=1
-plugin_AIRGEDDON_DO_NOT_SPOOF_MAC_ADDRESS_AUTOMATIC=0
 
 ###### CUSTOM FUNCTIONS ######
 function convert_iface_to_ifname() {
@@ -33,10 +32,10 @@ function convert_iface_to_ifname() {
     done
 }
 function spoof_mac_automatically() {
-    # Restore original macs:
+    # Restore original MAC-addresses:
     restore_spoofed_macs
 
-    # Set new random mac:
+    # Set new random MAC-address:
     local interfaceName=$(convert_iface_to_ifname ${iface})
     set_spoofed_mac "${interfaceName}"
 }
@@ -152,7 +151,11 @@ function spoof_mac_automatically_posthook_exec_michaelshutdown() {
     restore_spoofed_macs
 }
 
-# Spoof MAC-address before DoS pursuit mode attacks.
+# Suppress ask for spoof MAC-address before DoS pursuit mode attacks.
+function spoof_mac_automatically_prehook_et_prerequisites() {
+    debug_print
+    mac_spoofing_desired=1
+}
 function spoof_mac_automatically_override_et_prerequisites() {
 
     debug_print
@@ -224,13 +227,11 @@ function spoof_mac_automatically_override_et_prerequisites() {
         fi
     fi
 
-    if [ ${plugin_AIRGEDDON_DO_NOT_SPOOF_MAC_ADDRESS_AUTOMATIC} -eq 1 ]; then
+    if [[ -z mac_spoofing_desired ]] || [[ ${mac_spoofing_desired} -eq 0 ]]; then
         ask_yesno 419 "no"
         if [ "${yesno}" = "y" ]; then
             mac_spoofing_desired=1
         fi
-    else
-        spoof_mac_automatically
     fi
 
     if [ "${et_mode}" = "et_captive_portal" ]; then
