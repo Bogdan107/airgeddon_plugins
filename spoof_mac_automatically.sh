@@ -2,7 +2,7 @@
 
 # spoof_mac_automatically airgeddon plugin
 
-# Version:    0.2.4
+# Version:    0.2.5
 # Author:     Bogdan107
 # Repository: https://github.com/Bogdan107/airgeddon-plugins
 # License:    GNU General Public License v3.0, https://opensource.org/licenses/GPL-3.0
@@ -43,7 +43,7 @@ function spoof_mac_automatically() {
 ###### PLUGIN REQUIREMENTS ######
 
 plugin_minimum_ag_affected_version="10.0"
-plugin_maximum_ag_affected_version=""
+plugin_maximum_ag_affected_version="10.42"
 
 plugin_distros_supported=("*")
 
