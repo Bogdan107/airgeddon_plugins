@@ -20,7 +20,7 @@ plugin_enabled=1
 
 ###### CUSTOM FUNCTIONS ######
 function convert_iface_to_ifname() {
-    local ifaceNumber="$1";
+    local ifaceNumber; ifaceNumber="$1";
 
     option_counter=0
     for interfaceName in ${ifaces}; do
@@ -36,7 +36,7 @@ function spoof_mac_automatically() {
     restore_spoofed_macs
 
     # Set new random MAC-address:
-    local interfaceName=$(convert_iface_to_ifname ${iface})
+    local interfaceName; interfaceName=$(convert_iface_to_ifname "${iface}")
     set_spoofed_mac "${interfaceName}"
 }
 
