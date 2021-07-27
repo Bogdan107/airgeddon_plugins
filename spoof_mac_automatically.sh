@@ -2,7 +2,7 @@
 
 # spoof_mac_automatically airgeddon plugin
 
-# Version:    0.2.3
+# Version:    0.2.4
 # Author:     Bogdan107
 # Repository: https://github.com/Bogdan107/airgeddon-plugins
 # License:    GNU General Public License v3.0, https://opensource.org/licenses/GPL-3.0
@@ -60,15 +60,30 @@ function spoof_mac_automatically_posthook_select_interface() {
     interface_mac="${new_random_mac}"
 }
 
-# Spoof MAC-address for WPS-attack.
+# Spoof MAC-address before WPS-attack.
 function spoof_mac_automatically_prehook_set_wps_attack_script() {
     debug_print
     spoof_mac_automatically
+}
+# Restore MAC-address after WPS-attack (custom PIN).
+function spoof_mac_automatically_posthook_exec_wps_custom_pin_bully_attack() {
+    debug_print
+    restore_spoofed_macs
+}
+function spoof_mac_automatically_posthook_exec_wps_custom_pin_reaver_attack() {
+    debug_print
+    restore_spoofed_macs
+}
+# Restore MAC-address after WPS-attack (Pixie Dust).
+function spoof_mac_automatically_posthook_exec_bully_pixiewps_attack() {
+    debug_print
+    restore_spoofed_macs
 }
 function spoof_mac_automatically_posthook_exec_reaver_pixiewps_attack() {
     debug_print
     restore_spoofed_macs
 }
+# Restore MAC-address after WPS-attack (bruteforce).
 function spoof_mac_automatically_posthook_exec_wps_bruteforce_pin_bully_attack() {
     debug_print
     restore_spoofed_macs
@@ -77,6 +92,7 @@ function spoof_mac_automatically_posthook_exec_wps_bruteforce_pin_reaver_attack(
     debug_print
     restore_spoofed_macs
 }
+# Restore MAC-address after WPS-attack (PIN database).
 function spoof_mac_automatically_posthook_exec_wps_pin_database_bully_attack() {
     debug_print
     restore_spoofed_macs
@@ -85,6 +101,7 @@ function spoof_mac_automatically_posthook_exec_wps_pin_database_reaver_attack() 
     debug_print
     restore_spoofed_macs
 }
+# Restore MAC-address after WPS-attack (NULL PIN).
 function spoof_mac_automatically_posthook_exec_reaver_nullpin_attack() {
     debug_print
     restore_spoofed_macs
